@@ -31,18 +31,19 @@ define swift::storage::disk (
       owner  => 'swift',
       group  => 'swift',
       ensure => directory,
+      require => User['swift'],
     }
   }
 
   exec { "create_partition_label-${name}":
     command => "parted ${base_dir}/${device} mklabel msdos",
-    path => ['/sbin'],
+    path => ['/sbin','/bin'],
     unless => "parted ${base_dir}/${device} print",
   }
   exec { "create_partition-${name}":
     command => "parted ${base_dir}/${device} mkpart primary ext2 2048kB ${size}",
-    path => ['/sbin'],
-    unless => "parted ${base_dir}/${device} print | grep '^[[:space:]]*1.*primary.*'"
+    path => ['/sbin','/bin'],
+    unless => "parted ${base_dir}/${device} print | grep '^[[:space:]]*1.*primary.*'",
     require => Exec["create_partition_label-${name}"],
   }
 
