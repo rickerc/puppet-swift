@@ -49,6 +49,11 @@ class swift(
     ensure => directory,
   }
 
+  file { '/var/cache/swift':
+    ensure => directory,
+    mode   => '0755',
+  }
+
   file { '/etc/swift/swift.conf':
     ensure  => present,
     mode    => 0660,
