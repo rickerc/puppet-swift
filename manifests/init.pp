@@ -35,6 +35,19 @@ class swift(
 
   File { owner => 'swift', group => 'swift', require => Package['swift'] }
 
+  group { 'swift':
+    ensure  => present,
+    system  => true,
+    require => Package['swift'],
+  }
+
+  user { 'swift':
+    ensure  => present,
+    gid     => 'swift',
+    system  => true,
+    require => Package['swift'],
+  }
+
   file { '/home/swift':
     ensure  => directory,
     mode    => 0700,
