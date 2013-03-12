@@ -54,6 +54,9 @@ describe 'swift' do
     it {should contain_file('/var/run/swift').with(
       {:ensure => 'directory'}.merge(file_defaults)
     )}
+    it {should contain_file('/var/cache/swift').with(
+      {:ensure => 'directory'}.merge(file_defaults)
+    )}
     it {should contain_file('/etc/swift/swift.conf').with(
       {:ensure  => 'present',
        :mode    => '0660',
@@ -61,6 +64,8 @@ describe 'swift' do
       }.merge(file_defaults)
     )}
     it {should contain_package('swift').with_ensure('present')}
+    it {should contain_user('swift')}
+    it {should contain_file('/var/lib/swift').with_ensure('directory')}
   end
 
   describe 'when overriding package_ensure parameter' do

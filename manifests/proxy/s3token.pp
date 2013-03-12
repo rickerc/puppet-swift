@@ -15,16 +15,16 @@
 #
 # == Authors
 #
-#   François Charlier fcharlier@ploup.net
+#   Francois Charlier fcharlier@ploup.net
 #
 # == Copyright
 #
 # Copyright 2012 eNovance licensing@enovance.com
 #
 class swift::proxy::s3token(
-  auth_host = '127.0.0.1',
-  auth_port = 5000,
-  auth_protocol = 'http'
+  $auth_host = '127.0.0.1',
+  $auth_port = '35357',
+  $auth_protocol = 'http'
 ) {
 
   concat::fragment { 'swift_s3token':

@@ -28,8 +28,15 @@ class swift(
 
   Class['ssh::server::install'] -> Class['swift']
 
-  package { 'swift':
-    name   => $::swift::params::package_name,
+  if !defined(Package['swift']) {
+    package { 'swift':
+      name   => $::swift::params::package_name,
+      ensure => $package_ensure,
+    }
+  }
+
+  package { 'swiftclient':
+    name   => $::swift::params::client_package,
     ensure => $package_ensure,
   }
 
@@ -44,7 +51,13 @@ class swift(
     ensure => directory,
     mode   => 2770,
   }
-
+  user {'swift':
+    ensure => present,
+  }
+  file { '/var/lib/swift':
+    ensure => directory,
+    owner => 'swift'
+  }
   file { '/var/run/swift':
     ensure => directory,
   }
@@ -59,4 +72,9 @@ class swift(
     mode    => 0660,
     content => template('swift/swift.conf.erb'),
   }
+
+  file { '/var/cache/swift':
+    ensure => directory,
+  }
+
 }
