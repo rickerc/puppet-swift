@@ -45,6 +45,7 @@ describe 'swift::proxy' do
         {:ensure    => 'running',
          :provider  => 'upstart',
          :enable    => true,
+         :hasstatus => true,
          :subscribe => 'Concat[/etc/swift/proxy-server.conf]'
         }
       )}
@@ -53,7 +54,6 @@ describe 'swift::proxy' do
          :owner   => 'swift',
          :group   => 'swift',
          :mode    => '0660',
-         :require => 'Package[swift-proxy]'
         }
       )}
 

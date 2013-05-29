@@ -7,18 +7,24 @@ class swift::params {
       $proxy_service_name                = 'swift-proxy'
       $object_package_name               = 'swift-object'
       $object_service_name               = 'swift-object'
+      $object_auditor_service_name       = 'swift-object-auditor'
       $object_replicator_service_name    = 'swift-object-replicator'
+      $object_updater_service_name       = 'swift-object-updater'
       $container_package_name            = 'swift-container'
       $container_service_name            = 'swift-container'
+      $container_auditor_service_name    = 'swift-container-auditor'
       $container_replicator_service_name = 'swift-container-replicator'
+      $container_updater_service_name    = 'swift-container-updater'
       $account_package_name              = 'swift-account'
       $account_service_name              = 'swift-account'
+      $account_auditor_service_name      = 'swift-account-auditor'
+      $account_reaper_service_name       = 'swift-account-reaper'
       $account_replicator_service_name   = 'swift-account-replicator'
       $swift3                            = 'swift-plugin-s3'
-      if $::operatingsystem == 'Debian' {
-        $service_proivider    = 'debian'
+      if $::operatingsystem == 'Ubuntu' {
+        $service_provider = 'upstart'
       } else {
-        $service_provider     = 'upstart'
+        $service_provider = undef
       }
     }
     'RedHat': {
@@ -28,13 +34,19 @@ class swift::params {
       $proxy_service_name                = 'openstack-swift-proxy'
       $object_package_name               = 'openstack-swift-object'
       $object_service_name               = 'openstack-swift-object'
-      $object_replicator_service_name    = undef
+      $object_auditor_service_name       = 'openstack-swift-object-auditor'
+      $object_replicator_service_name    = 'openstack-swift-object-replicator'
+      $object_updater_service_name       = 'openstack-swift-object-updater'
       $container_package_name            = 'openstack-swift-container'
       $container_service_name            = 'openstack-swift-container'
-      $container_replicator_service_name = undef
+      $container_auditor_service_name    = 'openstack-swift-container-auditor'
+      $container_replicator_service_name = 'openstack-swift-container-replicator'
+      $container_updater_service_name    = 'openstack-swift-container-updater'
       $account_package_name              = 'openstack-swift-account'
       $account_service_name              = 'openstack-swift-account'
-      $account_replicator_service_name   = undef
+      $account_auditor_service_name      = 'openstack-swift-account-auditor'
+      $account_reaper_service_name       = 'openstack-swift-account-reaper'
+      $account_replicator_service_name   = 'openstack-swift-account-replicator'
       $service_provider                  = undef
       $swift3                            = 'openstack-swift-plugin-swift3'
     }

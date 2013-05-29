@@ -5,20 +5,22 @@ class swift::storage::container(
     package_ensure => $package_ensure
   }
 
-  # Not tested in other distros, safety measure
+  service { 'swift-container-updater':
+    name  => $::swift::params::container_updater_service_name,
+    ensure    => running,
+    enable    => true,
+    provider  => $::swift::params::service_provider,
+    require   => Package['swift-container'],
+  }
+  service { 'swift-container-auditor':
+    name  => $::swift::params::container_auditor_service_name,
+    ensure    => running,
+    enable    => true,
+    provider  => $::swift::params::service_provider,
+    require   => Package['swift-container'],
+  }
+
   if $operatingsystem == 'Ubuntu' {
-    service { 'swift-container-updater':
-      ensure    => running,
-      enable    => true,
-      provider  => $::swift::params::service_provider,
-      require   => Package['swift-container'],
-    }
-    service { 'swift-container-auditor':
-      ensure    => running,
-      enable    => true,
-      provider  => $::swift::params::service_provider,
-      require   => Package['swift-container'],
-    }
     # The following service conf is missing in Ubunty 12.04
     file { '/etc/init/swift-container-sync.conf':
       source  => 'puppet:///modules/swift/swift-container-sync.conf.upstart',
