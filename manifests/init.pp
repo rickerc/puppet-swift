@@ -71,6 +71,9 @@ class swift(
 
   file { '/var/cache/swift':
     ensure => directory,
+    mode   => '0770',
+    owner  => 'root',
+    group  => 'swift',
   }
 
 }
